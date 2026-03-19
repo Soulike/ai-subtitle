@@ -48,7 +48,10 @@ export const tingwu = {
         sourceLanguage,
       }),
       parameters: new CreateTaskRequestParameters({
-        transcription: new CreateTaskRequestParametersTranscription({}),
+        transcription: new CreateTaskRequestParametersTranscription({
+          diarizationEnabled: true,
+        }),
+        autoChaptersEnabled: true,
       }),
     });
 
