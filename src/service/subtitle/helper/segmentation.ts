@@ -1,28 +1,32 @@
-import type { Segment, SubtitleLine } from '../type/subtitle.js';
+import type { SubtitleLine } from '../type/subtitle.js';
 import type { TingwuParagraph } from '../type/tingwu-transcription.js';
+
+interface Fragment {
+  start: number;
+  end: number;
+  text: string;
+}
 
 export function convertParagraphsToLines(
   paragraphs: TingwuParagraph[],
   maxDurationMsPerLine: number,
 ): SubtitleLine[] {
   const fragments = splitOnPunctuation(paragraphs);
-  const merged = mergeShortFragments(fragments, maxDurationMsPerLine);
-  return forceSplitLongSegments(merged, maxDurationMsPerLine);
+  return mergeShortFragments(fragments, maxDurationMsPerLine);
 }
 
-function splitOnPunctuation(paragraphs: TingwuParagraph[]): Segment[] {
+function splitOnPunctuation(paragraphs: TingwuParagraph[]): Fragment[] {
   const punctuationPattern = /[。？！、，.?!,]$/;
-  const fragments: Segment[] = [];
-  let current: Segment | null = null;
+  const fragments: Fragment[] = [];
+  let current: Fragment | null = null;
 
   for (const para of paragraphs) {
     for (const word of para.Words) {
       if (!current) {
-        current = { start: word.Start, end: word.End, text: '', words: [] };
+        current = { start: word.Start, end: word.End, text: '' };
       }
       current.end = word.End;
       current.text += word.Text;
-      current.words.push(word);
 
       if (punctuationPattern.test(word.Text)) {
         fragments.push(current);
@@ -40,15 +44,15 @@ function splitOnPunctuation(paragraphs: TingwuParagraph[]): Segment[] {
 }
 
 function mergeShortFragments(
-  fragments: Segment[],
+  fragments: Fragment[],
   maxDurationMs: number,
-): Segment[] {
-  const merged: Segment[] = [];
-  let current: Segment | null = null;
+): SubtitleLine[] {
+  const merged: SubtitleLine[] = [];
+  let current: Fragment | null = null;
 
   for (const frag of fragments) {
     if (!current) {
-      current = { ...frag, words: [...frag.words] };
+      current = { ...frag };
       continue;
     }
 
@@ -56,10 +60,9 @@ function mergeShortFragments(
     if (mergedDuration <= maxDurationMs) {
       current.end = frag.end;
       current.text += frag.text;
-      current.words.push(...frag.words);
     } else {
       merged.push(current);
-      current = { ...frag, words: [...frag.words] };
+      current = { ...frag };
     }
   }
 
@@ -68,40 +71,4 @@ function mergeShortFragments(
   }
 
   return merged;
-}
-
-function forceSplitLongSegments(
-  segments: Segment[],
-  maxDurationMs: number,
-): SubtitleLine[] {
-  const result: SubtitleLine[] = [];
-
-  for (const seg of segments) {
-    const duration = seg.end - seg.start;
-    if (duration <= maxDurationMs) {
-      result.push({ start: seg.start, end: seg.end, text: seg.text });
-      continue;
-    }
-
-    const { words } = seg;
-    let chunkStart = words[0].Start;
-    let chunkText = '';
-
-    for (let i = 0; i < words.length; i++) {
-      const w = words[i];
-      chunkText += w.Text;
-      const chunkDuration = w.End - chunkStart;
-      const isLast = i === words.length - 1;
-
-      if (chunkDuration >= maxDurationMs || isLast) {
-        result.push({ start: chunkStart, end: w.End, text: chunkText });
-        if (!isLast) {
-          chunkStart = words[i + 1].Start;
-          chunkText = '';
-        }
-      }
-    }
-  }
-
-  return result;
 }
