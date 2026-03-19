@@ -12,12 +12,13 @@ import { createTranscriptSchema } from './schema.js';
 export function registerTranscriptRoutes(router: Router) {
   router.post('/transcript', async (ctx) => {
     const file = parseUploadedFile(ctx);
-    const { sourceLanguage } = parseBody(
-      ctx.request.body,
-      createTranscriptSchema,
-    );
 
     try {
+      const { sourceLanguage } = parseBody(
+        ctx.request.body,
+        createTranscriptSchema,
+      );
+
       const taskId = await transcriptService.createTask(
         createReadStream(file.filepath),
         sourceLanguage,

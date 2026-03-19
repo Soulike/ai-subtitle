@@ -11,7 +11,7 @@ export const transcriptService = {
   ): Promise<string> {
     const ossKey = `audio/${randomUUID()}`;
     await aliyunOss.uploadFile(ossKey, file);
-    const fileUrl = aliyunOss.getSignedUrl(ossKey);
+    const fileUrl = aliyunOss.getSignedUrl(ossKey, 12 * 60 * 60); // 12 hours
     const taskId = await tingwu.createTranscriptionTask(
       fileUrl,
       sourceLanguage,
