@@ -2,12 +2,12 @@
 
 ## Pattern
 
-API functions handle communication with external services. They encapsulate HTTP calls, SDK usage, and response parsing, returning typed data.
+API functions handle communication with external services. They encapsulate HTTP calls, SDK usage, and response parsing, returning typed data. Group related functions using an object literal namespace.
 
 ## Adding an API
 
 1. Create a new file in `src/api/` (e.g. `subtitle.ts`)
-2. Export named functions for each external call
+2. Export an object literal grouping related functions
 
 ```ts
 // src/api/subtitle.ts
@@ -16,11 +16,11 @@ interface TranscriptionResult {
   segments: { start: number; end: number; text: string }[];
 }
 
-export async function fetchTranscription(
-  audioUrl: string,
-): Promise<TranscriptionResult> {
-  // call external service
-}
+export const subtitle = {
+  async fetchTranscription(audioUrl: string): Promise<TranscriptionResult> {
+    // call external service
+  },
+};
 ```
 
 ## Rules

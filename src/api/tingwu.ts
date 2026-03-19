@@ -6,7 +6,15 @@ import TingwuClient, {
   CreateTaskRequestInput,
   CreateTaskRequestParameters,
   CreateTaskRequestParametersTranscription,
+  type GetTaskInfoResponseBodyDataResult,
 } from '@alicloud/tingwu20230930';
+
+export interface TingwuTaskStatus {
+  status: string | undefined;
+  result: GetTaskInfoResponseBodyDataResult | undefined;
+  errorCode: string | undefined;
+  errorMessage: string | undefined;
+}
 
 const accessKeyId = process.env.ALIYUN_ACCESS_KEY_ID;
 const accessKeySecret = process.env.ALIYUN_ACCESS_KEY_SECRET;
@@ -61,7 +69,7 @@ export const tingwu = {
     return taskId;
   },
 
-  async getTaskStatus(taskId: string) {
+  async getTaskStatus(taskId: string): Promise<TingwuTaskStatus> {
     const response = await client.getTaskInfo(taskId);
     const data = response.body?.data;
     return {
