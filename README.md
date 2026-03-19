@@ -80,6 +80,19 @@ When task fails, `errorCode` and `errorMessage` fields are included.
 
 Task status values: `PENDING`, `RUNNING`, `COMPLETE`, `FAILED`.
 
+### Convert to ASS Subtitle
+
+```
+POST /convert/ass
+Content-Type: application/json
+```
+
+| Field              | Type   | Required | Description                      |
+| ------------------ | ------ | -------- | -------------------------------- |
+| `transcriptionUrl` | string | Yes      | URL to Tingwu transcription JSON |
+
+**Response:** ASS subtitle file (`Content-Type: text/x-ssa`)
+
 ## Development
 
 ```sh
