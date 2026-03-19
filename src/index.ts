@@ -12,7 +12,7 @@ const app = new Koa();
 
 app.use(errorHandler());
 app.use(koaPinoLogger({ logger }));
-app.use(koaBody());
+app.use(koaBody({ multipart: true }));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
