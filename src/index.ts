@@ -16,6 +16,7 @@ app.use(
   koaBody({
     multipart: true,
     formidable: {
+      maxFiles: 1,
       maxFileSize: 1024 * 1024 * 1024, // 1GB
       filter: (part) => {
         if (!part.originalFilename) return true; // allow text fields
