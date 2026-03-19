@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@koa/router": "^15.4.0",
+    "ali-oss": "^6.23.0",
     "http-errors": "^2.0.1",
     "koa": "^3.1.2",
     "koa-body": "^7.0.1",
@@ -27,6 +28,7 @@
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
+    "@types/ali-oss": "^6.23.3",
     "@types/http-errors": "^2.0.5",
     "@types/koa": "^3.0.2",
     "@types/koa-pino-logger": "^3.0.5",

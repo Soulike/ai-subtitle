@@ -24,6 +24,7 @@ Layers only depend on downward: Router → Service → API. Never reverse.
 ## Conventions
 
 - No default exports (config files exempted)
+- Group related functions using object literals as namespaces (e.g. `export const aliyunOss = { uploadFile, deleteFile }`)
 - File names use kebab-case (e.g. `error-handler.ts`)
 - Import order enforced
 - Relative imports use `.js` extension (nodenext resolution)
