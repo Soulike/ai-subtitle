@@ -16,6 +16,9 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@alicloud/openapi-core": "^1.0.7",
+    "@alicloud/tingwu20230930": "^2.0.24",
+    "@darabonba/typescript": "^1.0.4",
     "@koa/router": "^15.4.0",
     "ali-oss": "^6.23.0",
     "http-errors": "^2.0.1",
