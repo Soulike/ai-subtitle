@@ -9,7 +9,10 @@ export function parseBody<T extends z.ZodType>(
   const result = schema.safeParse(body);
   if (!result.success) {
     const message = result.error.issues
-      .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+      .map((issue) => {
+        const path = issue.path.join('.');
+        return path ? `${path}: ${issue.message}` : issue.message;
+      })
       .join('; ');
     throw new AppError(400, message);
   }

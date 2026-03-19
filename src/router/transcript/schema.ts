@@ -1,5 +1,5 @@
 import { z } from 'zod';
 
 export const createTranscriptSchema = z.object({
-  sourceLanguage: z.string().min(1),
+  sourceLanguage: z.string().trim().min(1),
 });

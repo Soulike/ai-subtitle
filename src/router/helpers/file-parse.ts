@@ -3,7 +3,7 @@ import type Koa from 'koa';
 
 import { AppError } from '@/types/error.js';
 
-export function parseUploadedFiles(ctx: Koa.Context): File {
+export function parseUploadedFile(ctx: Koa.Context): File {
   const { files } = ctx.request;
   if (!files?.file) {
     throw new AppError(400, 'Missing "file" in multipart upload');

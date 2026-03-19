@@ -3,7 +3,7 @@ import { unlink } from 'node:fs/promises';
 
 import type Router from '@koa/router';
 
-import { parseUploadedFiles } from '@/router/helpers/file-parse.js';
+import { parseUploadedFile } from '@/router/helpers/file-parse.js';
 import { parseBody } from '@/router/helpers/parse-body.js';
 import { transcriptService } from '@/service/transcript.js';
 
@@ -11,7 +11,7 @@ import { createTranscriptSchema } from './schema.js';
 
 export function registerTranscriptRoutes(router: Router) {
   router.post('/transcript', async (ctx) => {
-    const file = parseUploadedFiles(ctx);
+    const file = parseUploadedFile(ctx);
     const { sourceLanguage } = parseBody(
       ctx.request.body,
       createTranscriptSchema,
