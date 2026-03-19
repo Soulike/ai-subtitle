@@ -12,7 +12,19 @@ const app = new Koa();
 
 app.use(errorHandler());
 app.use(koaPinoLogger({ logger }));
-app.use(koaBody());
+app.use(
+  koaBody({
+    multipart: true,
+    formidable: {
+      maxFiles: 1,
+      maxFileSize: 1024 * 1024 * 1024, // 1GB
+      filter: (part) => {
+        if (!part.originalFilename) return true; // allow text fields
+        return part.mimetype?.startsWith('audio/') ?? false;
+      },
+    },
+  }),
+);
 app.use(router.routes());
 app.use(router.allowedMethods());
 
