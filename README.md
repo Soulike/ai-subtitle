@@ -72,11 +72,13 @@ GET /transcript/:taskId
 ```json
 {
   "status": "COMPLETE",
-  "result": { ... },
-  "errorCode": null,
-  "errorMessage": null
+  "result": { "...": "..." }
 }
 ```
+
+When task fails, `errorCode` and `errorMessage` fields are included.
+
+````
 
 Task status values: `PENDING`, `RUNNING`, `COMPLETE`, `FAILED`.
 
@@ -94,7 +96,7 @@ bun run typecheck
 
 # Test
 bun run test
-```
+````
 
 ## License
 

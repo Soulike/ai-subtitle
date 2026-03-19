@@ -1,5 +1,5 @@
 import type { File } from 'formidable';
-import Koa from 'koa';
+import type Koa from 'koa';
 
 import { AppError } from '@/types/error.js';
 
@@ -9,5 +9,9 @@ export function parseUploadedFiles(ctx: Koa.Context): File {
     throw new AppError(400, 'Missing "file" in multipart upload');
   }
 
-  return Array.isArray(files.file) ? files.file[0] : files.file;
+  const file = Array.isArray(files.file) ? files.file[0] : files.file;
+  if (!file) {
+    throw new AppError(400, 'Missing "file" in multipart upload');
+  }
+  return file;
 }

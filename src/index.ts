@@ -12,7 +12,14 @@ const app = new Koa();
 
 app.use(errorHandler());
 app.use(koaPinoLogger({ logger }));
-app.use(koaBody({ multipart: true }));
+app.use(
+  koaBody({
+    multipart: true,
+    formidable: {
+      maxFileSize: 1024 * 1024 * 1024, // 1GB
+    },
+  }),
+);
 app.use(router.routes());
 app.use(router.allowedMethods());
 

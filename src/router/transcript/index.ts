@@ -18,7 +18,6 @@ export function registerTranscriptRoutes(router: Router) {
 
     const taskId = await transcriptService.createTask(
       createReadStream(file.filepath),
-      file.originalFilename ?? 'audio',
       sourceLanguage,
     );
 
