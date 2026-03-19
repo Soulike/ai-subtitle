@@ -1,3 +1,4 @@
+import HttpError from 'http-errors';
 import type Koa from 'koa';
 
 import { AppError } from '@/types/error.js';
@@ -10,14 +11,14 @@ export function errorHandler(): Koa.Middleware {
       if (err instanceof AppError) {
         ctx.status = err.statusCode;
         ctx.body = { error: err.message };
-        if (err.statusCode >= 500) {
-          ctx.log.error(err);
-        }
+      } else if (HttpError.isHttpError(err)) {
+        ctx.status = err.status;
+        ctx.body = { error: err.message };
       } else {
         ctx.status = 500;
         ctx.body = { error: 'Internal Server Error' };
-        ctx.log.error(err);
       }
+      ctx.log.error(err);
     }
   };
 }
