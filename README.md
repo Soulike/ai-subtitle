@@ -52,7 +52,7 @@ Content-Type: multipart/form-data
 
 | Field            | Type   | Required | Description                                                                                                                                             |
 | ---------------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `file`           | file   | Yes      | Audio/video file                                                                                                                                        |
+| `file`           | file   | Yes      | Audio file (max 1GB). Supported types: `audio/*`                                                                                                        |
 | `sourceLanguage` | string | Yes      | Source language code (e.g. `cn`, `en`). See [Tingwu API docs](https://help.aliyun.com/zh/tingwu/api-tingwu-2023-09-30-createtask) for supported values. |
 
 **Response:**
@@ -78,8 +78,6 @@ GET /transcript/:taskId
 
 When task fails, `errorCode` and `errorMessage` fields are included.
 
-````
-
 Task status values: `PENDING`, `RUNNING`, `COMPLETE`, `FAILED`.
 
 ## Development
@@ -96,7 +94,7 @@ bun run typecheck
 
 # Test
 bun run test
-````
+```
 
 ## License
 

@@ -17,6 +17,7 @@ app.use(
     multipart: true,
     formidable: {
       maxFileSize: 1024 * 1024 * 1024, // 1GB
+      filter: ({ mimetype }) => mimetype?.startsWith('audio/') ?? false,
     },
   }),
 );
