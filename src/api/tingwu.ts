@@ -31,8 +31,9 @@ assert(regionId, 'TINGWU_REGION_ID environment variable is required');
 assert(endpoint, 'TINGWU_ENDPOINT environment variable is required');
 assert(appKey, 'TINGWU_APP_KEY environment variable is required');
 
-// CJS default export interop — the SDK uses CommonJS but we import as ESM
-const Client = TingwuClient.default;
+// Bun resolves the CJS default export automatically, but TypeScript sees it as the module namespace.
+// Use .default for TypeScript, which at runtime is the constructor itself via Bun's ESM interop.
+const Client = TingwuClient.default ?? TingwuClient;
 
 const client = new Client(
   new $OpenApiUtil.Config({
