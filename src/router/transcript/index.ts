@@ -19,12 +19,17 @@ export function registerTranscriptRoutes(router: Router) {
         createTranscriptSchema,
       );
 
-      const taskId = await transcriptService.createTask(
-        createReadStream(file.filepath),
-        sourceLanguage,
-      );
+      const stream = createReadStream(file.filepath);
+      try {
+        const taskId = await transcriptService.createTask(
+          stream,
+          sourceLanguage,
+        );
 
-      ctx.body = { taskId };
+        ctx.body = { taskId };
+      } finally {
+        stream.destroy();
+      }
     } finally {
       unlink(file.filepath).catch((err: unknown) => {
         ctx.log.warn(err, 'Failed to delete temp file');
