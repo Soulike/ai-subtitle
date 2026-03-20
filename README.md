@@ -43,10 +43,12 @@ GET /health
 
 Returns `{ "status": "ok" }`.
 
-### Create Transcript
+### Tingwu
+
+#### Create Transcript
 
 ```
-POST /transcript
+POST /tingwu/transcript
 Content-Type: multipart/form-data
 ```
 
@@ -61,10 +63,10 @@ Content-Type: multipart/form-data
 { "taskId": "abc123" }
 ```
 
-### Get Transcript Status
+#### Get Transcript Status
 
 ```
-GET /transcript/:taskId
+GET /tingwu/transcript/:taskId
 ```
 
 **Response:**
@@ -80,10 +82,10 @@ When task fails, `errorCode` and `errorMessage` fields are included.
 
 Task status values: `PENDING`, `RUNNING`, `COMPLETE`, `FAILED`.
 
-### Convert to ASS Subtitle
+#### Convert to ASS Subtitle
 
 ```
-POST /convert/ass
+POST /tingwu/convert/ass
 Content-Type: application/json
 ```
 
