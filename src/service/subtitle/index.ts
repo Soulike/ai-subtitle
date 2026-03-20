@@ -1,19 +1,15 @@
-import { Readable } from 'node:stream';
-
 import type { TingwuTranscription } from '@/types/tingwu.js';
 
-import { generateAss } from './helper/ass-generator.js';
-import { convertParagraphsToLines } from './helper/segmentation.js';
+import { TingwuTranscriptToAssConverter } from './helper/tingwu-transcript-to-ass-converter.js';
 
 const MAX_DURATION_MS_PER_LINE = 5000;
 
 export const subtitleService = {
-  convertToAss(transcription: TingwuTranscription): Readable {
-    const lines = convertParagraphsToLines(
-      transcription.Transcription.Paragraphs,
+  convertToAss(transcription: TingwuTranscription): Generator<string> {
+    const converter = new TingwuTranscriptToAssConverter(
+      transcription,
       MAX_DURATION_MS_PER_LINE,
     );
-
-    return generateAss(lines);
+    return converter.generate();
   },
 };

@@ -1,3 +1,5 @@
+import { Readable } from 'node:stream';
+
 import type Router from '@koa/router';
 
 import { parseBody } from '@/router/helpers/parse-body.js';
@@ -14,6 +16,6 @@ export function registerConvertRoutes(router: Router) {
     const ass = subtitleService.convertToAss(transcription);
 
     ctx.type = 'text/x-ssa';
-    ctx.body = ass;
+    ctx.body = Readable.from(ass);
   });
 }
