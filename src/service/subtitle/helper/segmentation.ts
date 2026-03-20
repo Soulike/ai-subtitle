@@ -1,5 +1,6 @@
+import type { TingwuParagraph } from '@/types/tingwu.js';
+
 import type { SubtitleLine } from '../type/subtitle.js';
-import type { TingwuParagraph } from '../type/tingwu-transcription.js';
 
 interface Fragment {
   start: number;

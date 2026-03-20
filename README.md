@@ -87,9 +87,7 @@ POST /convert/ass
 Content-Type: application/json
 ```
 
-| Field              | Type   | Required | Description                      |
-| ------------------ | ------ | -------- | -------------------------------- |
-| `transcriptionUrl` | string | Yes      | URL to Tingwu transcription JSON |
+**Request body:** The raw Tingwu transcription JSON returned by the [Get Transcript Status](#get-transcript-status) endpoint (the value of `result`).
 
 **Response:** ASS subtitle file (`Content-Type: text/x-ssa`)
 
