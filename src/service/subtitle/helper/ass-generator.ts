@@ -29,13 +29,22 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         const seg = segments[index];
         const start = msToAssTime(seg.start);
         const end = msToAssTime(seg.end);
-        this.push(`Dialogue: 0,${start},${end},Default,,0,0,0,,${seg.text}\n`);
+        this.push(
+          `Dialogue: 0,${start},${end},Default,,0,0,0,,${escapeAssText(seg.text)}\n`,
+        );
         index++;
       } else {
         this.push(null);
       }
     },
   });
+}
+
+function escapeAssText(text: string): string {
+  return text
+    .replace(/\\/g, '\\\\')
+    .replace(/\{/g, '\\{')
+    .replace(/\}/g, '\\}');
 }
 
 function msToAssTime(ms: number): string {
